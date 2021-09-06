@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+c# -*- coding: utf-8 -*-
 """
 Created on Wed Sep  1 14:32:59 2021
 
@@ -29,8 +29,8 @@ import flopy
 import time
 
 
-base_pth = os.path.join("flopy")
-data_pth = os.path.join("data_folder")
+base_pth = os.path.join("flopy") #Specify your folder path for the groundwater model
+data_pth = os.path.join("data_folder") #Work folder
 
 
 Q = -200
@@ -48,7 +48,7 @@ plt.close('all')
 
 ml = flopy.modflow.Modflow.load(
     "DG.nam",
-    exe_name="mf2005dbl",
+    exe_name="mf2005dbl", #Make sure that you include a MODFLOW .exe file. Files can be downloaded at https://www.usgs.gov/software/modflow-2005-usgs-three-dimensional-finite-difference-ground-water-model
     verbose=True,
     model_ws=base_pth,
 )
