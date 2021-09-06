@@ -7,8 +7,11 @@ This repository contains a python file for simulation hydraulic head changes fro
 ## Use of the Repository
 
 Use the 'environment.yml' for python environment set-up. Run
-\newline 
-conda env create --file environment.yml
+
+
+### conda env create --file environment.yml
+
+
 from the anaconda command prompt within the repository. 
 
 Make sure to unpack the 'Train_sub.zip' file containing the data for 'Network_train.ipynb'.
