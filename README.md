@@ -12,7 +12,7 @@ Download the repository and unzip. Use the 'environment.yml' for python environm
 ### conda env create --file environment.yml
 
 
-from the anaconda command prompt within the repository. 
+from the anaconda command prompt within the repository. Make sure to unpack the 'Train_sub.zip' file containing the data for 'Network_train.ipynb'. 
 
-Make sure to unpack the 'Train_sub.zip' file containing the data for 'Network_train.ipynb'. 
+In order to run the 'Data_sampling.py' script, please download the groundwater model from https://github.com/modflowpy/flopy and specify the folder in the script. Also get the .exe files for MODFLOW 2005 from https://www.usgs.gov/software/modflow-2005-usgs-three-dimensional-finite-difference-ground-water-model and add them to PATH.
 
