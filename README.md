@@ -12,6 +12,7 @@ This repository contains a python file for simulation hydraulic head changes fro
 
 ## Use of the Repository
 
+Either open the notebooks in google colab or 
 Download the repository and unzip. Use the 'environment.yml' for python environment set-up. Run
 
 
