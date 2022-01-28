@@ -82,6 +82,9 @@ for i in range(len(row_number)):
     ml.remove_package("WEL")
     wel = flopy.modflow.ModflowWel(model=ml, stress_period_data=wd)
     wel.write_file()
+    ml.model_ws = data_pth
+    ml.write_input()
+    ml.exe_name = 'mf2005dbl'
     ml.run_model(silent=True)
 
     hedObj = flopy.utils.HeadFile(os.path.join(data_pth, "DG.hds"), precision='double')
