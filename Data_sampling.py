@@ -13,8 +13,8 @@ Specify:
     base_pth: The MODFLOW files compatible with FloPy https://github.com/modflowpy/flopy/tree/develop/examples/groundwater_paper/uspb/flopy
     data_pth: Folder to work in
     Q: Pumping rate of the well
-    row_number: List of rows to simulate wells in
-    col_number: List of cols to simulate wells in
+    rows: List of rows to simulate wells in
+    cols: List of cols to simulate wells in
 
 """ 
 
@@ -27,17 +27,18 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import flopy
 import time
+from tqdm import trange
 
 
 base_pth = os.path.join("flopy") #Specify your folder path for the groundwater model
 data_pth = os.path.join("data_folder") #Work folder
 
+pump_rates = np.load('pump_rates.npy')
+Q = pump_rates
+data = np.load('samples_hk_over1_1000.npy')
 
-Q = -200
-row_number = [180]
-col_number = [180]
-
-
+rows = data[:,-2]
+cols = data[:,-1]
 
 print(sys.version) 
 print('numpy version: {}'.format(np.__version__))
@@ -57,7 +58,6 @@ ml = flopy.modflow.Modflow.load(
 nrow, ncol = ml.dis.nrow, ml.dis.ncol
 ibound = ml.bas6.ibound[3, :, :]
 
-
 # create base model and run
 ml.model_ws = data_pth
 ml.exe_name = 'mf2005dbl'
@@ -66,19 +66,16 @@ ml.run_model(silent=True)
 idx = 1
 t1 = time.time()
 
-
 hedObj = flopy.utils.HeadFile(os.path.join(base_pth, "DG.hds"))
-h_0 = hedObj.get_data(kstpkper=(0,0))
+h_0 = hedObj.get_data(kstpkper=(0,0),mflay=3)
 
-
-
-
-for i in range(len(row_number)):
+time_save = []
+for i in trange(1000):
     t1 = time.time()
-    print('\nrow {} - col {}, sim = {} / {}\n'.format(row_number[i], col_number[i],idx,len(row_number)))
+    print('\nrow {} - col {},  sim = {} / {}\n'.format(rows[i], cols[i],idx,len(rows)))
 
-
-    wd = {0: [[3, row_number[i], col_number[i],Q]]}
+    pump = -Q[i]*(i+1)
+    wd = {0: [[3, rows[i], cols[i],pump]],1: [[3, rows[i], cols[i],pump]],2: [[3, rows[i], cols[i],pump]]}
     ml.remove_package("WEL")
     wel = flopy.modflow.ModflowWel(model=ml, stress_period_data=wd)
     wel.write_file()
@@ -88,12 +85,14 @@ for i in range(len(row_number)):
     ml.run_model(silent=True)
 
     hedObj = flopy.utils.HeadFile(os.path.join(data_pth, "DG.hds"), precision='double')
-    h = hedObj.get_data(kstpkper=(0,0))
-    np.save('San_Pedro_head_'+np.str(row_number[i])+'_'+np.str(col_number[i])+'.npy',h )
+    h = hedObj.get_data(kstpkper=(0,0),mflay=3)
+    #np.save('San_Pedro_head_response_'+str(rows[i])+'_'+str(cols[i])+'_'+str(pump)+'.npy',h )
     idx += 1
     
     t2 = time.time()
-    
+    time_save.append(t2-t1)
     print(f'This took {round(((t2-t1)),2)} s')
+    
+
 
 
