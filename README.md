@@ -5,7 +5,7 @@ Code supply for the paper 'Hydraulic Head Change Predictions in Groundwater Mode
 Full training data set available on Zenodo 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6817606.svg)](https://doi.org/10.5281/zenodo.6817606)
 
-This repository contains a python file for simulation hydraulic head changes from well pumping in the San Pedro River Basin groundwater model. The FloPy model can be downloaded from https://github.com/modflowpy/flopy. Also included are the python file for training the neural network 'SanPedroModelSpyder.py'. Training data can be found in the Zeniodo link.
+This repository contains a python file for simulation hydraulic head changes from well pumping in the San Pedro River Basin groundwater model. The FloPy model can be downloaded from https://github.com/modflowpy/flopy. Also included are the python file for training the neural network 'SanPedroModelSpyder.py'. Training data can be found in the Zenodo link.
 
 ## Use of the Repository
 
